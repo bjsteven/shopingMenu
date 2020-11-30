@@ -44,6 +44,26 @@ export const asyncRoutes = [
     ],
   },
   {
+    path: '/manage',
+    component: Layout,
+    redirect: '/manage/main',
+    meta: {
+      title: 'vvv',
+      icon: 'test-tube-line',
+    },
+    children: [
+      {
+        path: 'manage',
+        name: 'Manage',
+        component: () => import('@/views/manage'),
+        meta: {
+          title: '管理',
+          icon: 'home-4-line',
+        },
+      },
+    ],
+  },
+  {
     path: '/vab',
     component: Layout,
     redirect: '/vab/table',
@@ -69,56 +89,6 @@ export const asyncRoutes = [
         meta: {
           title: '图标',
           icon: 'remixicon-line',
-        },
-      },
-    ],
-  },
-  {
-    path: '/test',
-    component: Layout,
-    redirect: '/test/test',
-    meta: {
-      title: '动态路由测试',
-      icon: 'test-tube-line',
-    },
-    children: [
-      {
-        path: 'test',
-        name: 'Test',
-        component: () => import('@/views/test'),
-        meta: {
-          title: '动态路由测试',
-          icon: 'test-tube-line',
-        },
-      },
-    ],
-  },
-  {
-    path: '/error',
-    name: 'Error',
-    component: Layout,
-    redirect: '/error/403',
-    meta: {
-      title: '错误页',
-      icon: 'error-warning-line',
-    },
-    children: [
-      {
-        path: '403',
-        name: 'Error403',
-        component: () => import('@/views/403'),
-        meta: {
-          title: '403',
-          icon: 'error-warning-line',
-        },
-      },
-      {
-        path: '404',
-        name: 'Error404',
-        component: () => import('@/views/404'),
-        meta: {
-          title: '404',
-          icon: 'error-warning-line',
         },
       },
     ],

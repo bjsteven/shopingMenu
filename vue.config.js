@@ -181,6 +181,9 @@ module.exports = {
         lessOptions: {
           javascriptEnabled: true,
           modifyVars: {
+            'primary-color': '#1DA57A',
+            'link-color': '#1DA57A',
+            'border-radius-base': '2px',
             'vab-color-blue': '#1890ff',
             'vab-margin': '20px',
             'vab-padding': '20px',

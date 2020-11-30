@@ -10,6 +10,7 @@
 </template>
 <script>
   import { getList } from '@/api/table'
+
   const columns = [
     {
       title: 'title',

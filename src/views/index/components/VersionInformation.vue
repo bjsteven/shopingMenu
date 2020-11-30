@@ -112,6 +112,7 @@
     </div>
   </a-card>
 </template>
+
 <script>
   import { dependencies, devDependencies } from '*/package.json'
 
@@ -125,6 +126,7 @@
     },
   }
 </script>
+
 <style lang="less" scoped>
   .version-information {
     margin-top: @vab-margin;
