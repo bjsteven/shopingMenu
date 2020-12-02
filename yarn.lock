@@ -1722,6 +1722,11 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
+"@zollty/zollty-util@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@zollty/zollty-util/-/zollty-util-1.0.9.tgz#dd8bf61515d6b52170a86a56157d63009b3b0b53"
+  integrity sha512-yxwF32qC40kxnVpdDQcyjEYLF3YrhVfEtV0JXMePhMaPBPdFyBjmRaE2AynSdts5x/Ud+YQYq29h+G+A6nxaXA==
+
 accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.7:
   version "1.3.7"
   resolved "https://registry.yarnpkg.com/accepts/-/accepts-1.3.7.tgz#531bc726517a3b2b41f850021c6cc15eaab507cd"
@@ -11289,6 +11294,11 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
+
+vue-easy-lightbox@^1.0.0-rc.1:
+  version "1.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/vue-easy-lightbox/-/vue-easy-lightbox-1.0.0-rc.1.tgz#ff9d7b98cdf81c5b1432aaa5110f0c57454cab2c"
+  integrity sha512-SqT4iMtcwCgTiaHD5zXLu3jcgLmZaDrxVIEegofxJTRbyi3a2UJSrx0p4uk7sMJQOwT5Hw5m9m36vIcLNWe92A==
 
 vue-eslint-parser@^7.1.1:
   version "7.1.1"
