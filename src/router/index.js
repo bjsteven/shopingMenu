@@ -38,57 +38,6 @@ export const asyncRoutes = [
         meta: {
           title: '首页',
           icon: 'home-4-line',
-          affix: true,
-        },
-      },
-    ],
-  },
-  {
-    path: '/manage',
-    component: Layout,
-    redirect: '/manage/main',
-    meta: {
-      title: 'vvv',
-      icon: 'test-tube-line',
-    },
-    children: [
-      {
-        path: 'manage',
-        name: 'Manage',
-        component: () => import('@/views/manage'),
-        meta: {
-          title: '管理',
-          icon: 'home-4-line',
-        },
-      },
-    ],
-  },
-  {
-    path: '/vab',
-    component: Layout,
-    redirect: '/vab/table',
-    alwaysShow: true,
-    meta: {
-      title: '组件',
-      icon: 'apps-line',
-    },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/vab/table'),
-        meta: {
-          title: '表格',
-          icon: 'table-2',
-        },
-      },
-      {
-        path: 'icon',
-        name: 'Icon',
-        component: () => import('@/views/vab/icon'),
-        meta: {
-          title: '图标',
-          icon: 'remixicon-line',
         },
       },
     ],

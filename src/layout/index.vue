@@ -1,57 +1,14 @@
 <template>
   <a-layout class="vab-layout-wrap">
-    <div
-      v-if="device === 'mobile' && !collapse"
-      class="vab-mask"
-      @click="handleFoldSideBar"
-    ></div>
-    <a-layout-sider
-      collapsible
-      class="vab-sider"
-      width="250"
-      v-model:collapsed="collapse"
-      :class="classObj"
-      :trigger="null"
-    >
-      <vab-logo />
-      <a-menu
-        class="vab-menu"
-        theme="dark"
-        mode="inline"
-        v-model:selectedKeys="selectedKeys"
-        v-model:openKeys="openKeys"
-      >
-        <vab-menu v-for="route in routes" :key="route.path" :item="route" />
-      </a-menu>
-    </a-layout-sider>
     <a-layout
       class="vab-layout"
       :class="'mobile' === device ? 'vab-mobile-layout' : ''"
     >
-      <a-layout-header class="vab-header">
-        <a-row>
-          <a-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-            <menu-unfold-outlined
-              v-if="collapse"
-              class="trigger"
-              @click="toggleCollapse"
-            />
-            <menu-fold-outlined
-              v-else
-              class="trigger"
-              @click="toggleCollapse"
-            />
-          </a-col>
-          <a-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-            <vab-avatar />
-          </a-col>
-        </a-row>
-      </a-layout-header>
-      <vab-tabs />
       <vab-content />
     </a-layout>
   </a-layout>
 </template>
+
 <script>
   import VabLogo from './vab-logo'
   import VabAvatar from './vab-avatar'
@@ -127,6 +84,7 @@
     },
   }
 </script>
+
 <style lang="less">
   .vab-layout-wrap {
     .vab-sider {

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /**
  * @author chuzhixin 1204505056@qq.com
  * @description vue.config.js全局配置
@@ -10,7 +11,6 @@ const {
   outputDir,
   lintOnSave,
   transpileDependencies,
-  title,
   abbreviation,
   devPort,
   providePlugin,
@@ -20,7 +20,7 @@ const {
 const { webpackBarName, webpackBanner, donationConsole } = require('vab-config')
 
 if (donation) donationConsole()
-const { version, author } = require('./package.json')
+const { version } = require('./package.json')
 const Webpack = require('webpack')
 const WebpackBar = require('webpackbar')
 const FileManagerPlugin = require('filemanager-webpack-plugin')
@@ -29,8 +29,8 @@ const date = dayjs().format('YYYY_M_D')
 const time = dayjs().format('YYYY-M-D HH:mm:ss')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const productionGzipExtensions = ['html', 'js', 'css', 'svg']
-process.env.VUE_APP_TITLE = title || 'vue-admin-beautiful'
-process.env.VUE_APP_AUTHOR = author || 'chuzhixin'
+process.env.VUE_APP_TITLE = 'admin-manage'
+process.env.VUE_APP_AUTHOR = 'steven'
 process.env.VUE_APP_UPDATE_TIME = time
 process.env.VUE_APP_VERSION = version
 
@@ -181,13 +181,15 @@ module.exports = {
         lessOptions: {
           javascriptEnabled: true,
           modifyVars: {
-            'primary-color': '#1DA57A',
+            'backgroundColor': '#2d3030',
+            'primary-color': '#575959',
             'link-color': '#1DA57A',
             'border-radius-base': '2px',
             'vab-color-blue': '#1890ff',
             'vab-margin': '20px',
             'vab-padding': '20px',
             'vab-header-height': '65px',
+            'borderColor': '#ffffff',
           },
         },
       },

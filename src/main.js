@@ -4,6 +4,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import 'ant-design-vue/dist/antd.less'
+import '@/vab/my-theme.less' // 用于覆盖上面定义的变量
 import '@/vab'
 /**
  * @author chuzhixin 1204505056@qq.com

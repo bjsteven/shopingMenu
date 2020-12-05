@@ -27,6 +27,7 @@
             </a-form-item>
             <a-form-item>
               <a-button
+                style="width: 100%"
                 type="primary"
                 html-type="submit"
                 :disabled="form.username === '' || form.password === ''"
@@ -38,11 +39,6 @@
         </div>
       </a-col>
     </a-row>
-    <div class="login-container-tips">
-      基于vue{{ dependencies['vue'] }}
-      + ant-design-vue
-      {{ dependencies['ant-design-vue'] }}开发
-    </div>
   </div>
 </template>
 <script>
