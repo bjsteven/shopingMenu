@@ -19,15 +19,16 @@
             <dd>
               <a-select
                 size="default"
-                default-value=""
+                :default-value="this.allData.shutter.defaultValue"
+                placeholder="选择"
                 @change="handleSelectChange"
               >
                 <a-select-option
-                  v-for="item in data"
+                  v-for="item in this.allData.shutter.options"
                   :key="item.id"
-                  :value="item.id"
+                  :value="item.value"
                 >
-                  {{ item.author }}
+                  {{ item.value }}
                 </a-select-option>
               </a-select>
             </dd>
@@ -39,7 +40,8 @@
 </template>
 
 <script>
-  import { getList } from '@/api/table'
+  import { getList } from '@/api/camera'
+  import allData from '@/utils/detail.json'
 
   export default {
     name: 'camera',
@@ -65,10 +67,16 @@
           pageSize: 6,
           current: 1,
         },
-        data: [],
+        data: [
+          {
+            id: '',
+          },
+        ],
         query: {},
+        allData,
       }
     },
+    mounted() {},
     computed: {
       formItemLayout() {
         const { formLayout } = this
@@ -104,6 +112,7 @@
           pageSize: this.pagination.pageSize,
           current: this.pagination.current,
         }).then(({ data, total }) => {
+          console.log(data, '// data')
           const pagination = { ...this.pagination }
           pagination.total = total
           this.loading = false

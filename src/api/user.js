@@ -9,6 +9,15 @@ export async function login(data) {
   })
 }
 
+// 修改密码
+export async function updatePassword(data) {
+  return request({
+    url: '/updatePassword',
+    method: 'post',
+    data,
+  })
+}
+
 export async function socialLogin(data) {
   return request({
     url: '/socialLogin',

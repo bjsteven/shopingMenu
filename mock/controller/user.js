@@ -25,6 +25,25 @@ module.exports = [
     },
   },
   {
+    url: '/updatePassword',
+    type: 'post',
+    response(config) {
+      const { pass, checkPass } = config.body
+
+      if (!pass || !checkPass) {
+        return {
+          code: 500,
+          msg: '密码不正确。',
+        }
+      }
+      return {
+        code: 200,
+        msg: 'success',
+        data: { pass },
+      }
+    },
+  },
+  {
     url: '/socialLogin',
     type: 'post',
     response(config) {
