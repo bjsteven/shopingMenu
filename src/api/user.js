@@ -18,6 +18,24 @@ export async function updatePassword(data) {
   })
 }
 
+// 日出日落时间提交
+export async function daynighttime(data) {
+  return request({
+    url: '/daynighttime',
+    method: 'post',
+    data,
+  })
+}
+
+// 基于日出日落开启
+export async function autoswitch(data) {
+  return request({
+    url: '/autoswitch',
+    method: 'post',
+    data,
+  })
+}
+
 export async function socialLogin(data) {
   return request({
     url: '/socialLogin',

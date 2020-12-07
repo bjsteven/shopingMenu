@@ -1,7 +1,7 @@
 {
   "shutter": {
     "name": "快门",
-    "defaultValue": " 0 (auto)",
+    "defaultValue": "0 (auto)",
     "options": [
       {
         "id": 1,
@@ -75,9 +75,30 @@
   },
   "ISO": {
     "name": "ISO",
-    "defaultValue": " 0 (auto)",
+    "defaultValue": "0 (auto)",
     "options": [
-      
+      {
+        "id": 1,
+        "value": "1/500s"
+      },
+      {
+        "id": 2,
+        "value": "0 (auto)"
+      }
+    ]
+  },
+  "other": {
+    "name": "其他",
+    "defaultValue": "1/500s",
+    "options": [
+      {
+        "id": 1,
+        "value": "1/500s"
+      },
+      {
+        "id": 2,
+        "value": "1/200s"
+      }
     ]
   }
 }

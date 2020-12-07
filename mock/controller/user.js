@@ -24,6 +24,7 @@ module.exports = [
       }
     },
   },
+  // 修改密码
   {
     url: '/updatePassword',
     type: 'post',
@@ -40,6 +41,49 @@ module.exports = [
         code: 200,
         msg: 'success',
         data: { pass },
+      }
+    },
+  },
+  // 日出日落时间提交
+  {
+    url: '/daynighttime',
+    type: 'post',
+    response(config) {
+      const { Sunrise, Sunset } = config.body
+
+      if (!Sunrise || !Sunset) {
+        return {
+          code: 500,
+          msg: '参数不正确',
+        }
+      }
+      return {
+        code: 200,
+        msg: 'success',
+        data: {
+          Sunrise,
+          Sunset,
+        },
+      }
+    },
+  },
+  // 基于日出日落开启
+  {
+    url: '/autoswitch',
+    type: 'post',
+    response(config) {
+      // const { Sunrise, Sunset } = config.body
+      const { data } = config.body
+      if (!data) {
+        return {
+          code: 500,
+          msg: '参数不正确',
+        }
+      }
+      return {
+        code: 200,
+        msg: 'success',
+        data,
       }
     },
   },

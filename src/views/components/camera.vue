@@ -5,30 +5,32 @@
       button-style="solid"
       @change="handleChange"
     >
-      <a-radio-button value="Auto">Auto</a-radio-button>
-      <a-radio-button value="Night">Night</a-radio-button>
+      <a-radio-button value="auto">Auto</a-radio-button>
+      <a-radio-button value="night">Night</a-radio-button>
       <a-radio-button value="user">User</a-radio-button>
     </a-radio-group>
     <div>
       <ul class="device-option-list">
-        <li>
+        <li v-for="item in allData[`${currentModeType}`]" :key="item.name">
           <dl>
             <dt>
-              <button @click="handlerFetch">sss</button>
+              <button @click="handlerFetch">
+                {{ item.name }}
+              </button>
             </dt>
             <dd>
               <a-select
                 size="default"
-                :default-value="this.allData.shutter.defaultValue"
+                :default-value="item.defaultValue"
                 placeholder="选择"
                 @change="handleSelectChange"
               >
                 <a-select-option
-                  v-for="item in this.allData.shutter.options"
-                  :key="item.id"
-                  :value="item.value"
+                  v-for="it in item.options"
+                  :key="it.id"
+                  :value="it.value"
                 >
-                  {{ item.value }}
+                  {{ it.value }}
                 </a-select-option>
               </a-select>
             </dd>
@@ -41,13 +43,12 @@
 
 <script>
   import { getList } from '@/api/camera'
-  import allData from '@/utils/detail.json'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'camera',
     data() {
       return {
-        currentModeType: 'Auto',
         formLayout: 'horizontal',
         form: {
           name: '',
@@ -73,11 +74,17 @@
           },
         ],
         query: {},
-        allData,
       }
     },
-    mounted() {},
+    mounted() {
+      console.log(this.routes, '// routes')
+      console.log(this.$store.state, '// mapState')
+    },
     computed: {
+      ...mapGetters({
+        allData: 'camera/allData',
+        currentModeType: 'camera/currentModeType',
+      }),
       formItemLayout() {
         const { formLayout } = this
         return formLayout === 'horizontal'
