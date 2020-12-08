@@ -1,5 +1,40 @@
 <template>
   <div class="index-container">
+    <div>
+      <h4>{{ date0 }}</h4>
+      <h5>
+        {{ date1 }}
+        <span>{{ date2 }}</span>
+      </h5>
+    </div>
+    <div class="device-status-wrapper">
+      <ul v-if="deviceInfoData">
+        <li>
+          <i class="a1"></i>
+          <span>{{ deviceInfoData.BatteryVol }}</span>
+        </li>
+        <li>
+          <i class="a2"></i>
+          <span>{{ deviceInfoData.MemoryVol }}%</span>
+        </li>
+        <li>
+          <i class="a3"></i>
+          <span>{{ deviceInfoData.CPUtemp }}d</span>
+        </li>
+        <li>
+          <i class="a4"></i>
+          <span>{{ deviceInfoData.CPUusage }}%</span>
+        </li>
+        <li>
+          <i class="a5"></i>
+          <span>{{ deviceInfoData.isCharged }}</span>
+        </li>
+        <li>
+          <i class="a6"></i>
+          <span>{{ deviceInfoData.CamIsOn }}</span>
+        </li>
+      </ul>
+    </div>
     <a-radio-group
       :defaultValue="currentComponentName"
       button-style="solid"
@@ -20,11 +55,25 @@
   import user from '@/views/components/user'
   import photo from '@/views/components/photo'
   import camera from '@/views/components/camera'
+  import moment from 'moment'
+  import { getDeviceInfo } from '@/api/deviceinfo'
 
   export default {
     name: 'home-page',
+    mounted() {
+      const allDate = new Date()
+      const date = moment(allDate).format('LLLL').split(',')
+      this.date0 = date[0]
+      this.date1 = date[1]
+      this.date2 = allDate.getFullYear()
+      this.handleGetDeviceInfo()
+    },
     data() {
       return {
+        deviceInfoData: null,
+        date0: '',
+        date1: '',
+        date2: '',
         value: 1,
         mode: 'top',
         currentComponentName: 'camera',
@@ -37,6 +86,10 @@
       callback(val) {
         console.log(val)
       },
+      async handleGetDeviceInfo() {
+        const res = await getDeviceInfo()
+        this.deviceInfoData = res.data
+      },
     },
     components: {
       user,
@@ -47,14 +100,84 @@
 </script>
 
 <style lang="less" scoped>
+  .index-container {
+    padding: 5px;
+  }
   ::v-deep.ant-radio-group {
     display: flex;
+    height: 44px;
+    line-height: 44px;
+  }
+  ::v-deep.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled),
+  ::v-deep.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active,
+  ::v-deep.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
+    background: #575959;
+    border-color: @borderColor;
   }
   ::v-deep.ant-radio-button-wrapper {
     flex: 1;
     text-align: center;
+    height: 44px;
+    line-height: 44px;
+    background: none;
+    color: @borderColor;
   }
   .component-wrapper {
     margin-top: 5px;
+  }
+  h4 {
+    color: @borderColor;
+    font-size: 22px;
+    margin-bottom: 5px;
+  }
+  h5 {
+    color: @borderColor;
+    margin-top: 2px;
+    font-size: 18px;
+    padding-left: 10px;
+  }
+  .device-status-wrapper {
+    color: @borderColor;
+    padding: 15px;
+    ul {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-flow: row;
+      justify-content: space-between;
+      align-items: center;
+      li {
+        list-style: none;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        i {
+          width: 30px;
+          height: 33px;
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: contain;
+        }
+        i.a1 {
+          background-image: url('../../assets/icons/a1.png');
+        }
+        i.a2 {
+          background-image: url('../../assets/icons/a2.png');
+        }
+        i.a3 {
+          background-image: url('../../assets/icons/a3.png');
+        }
+        i.a4 {
+          background-image: url('../../assets/icons/a4.png');
+        }
+        i.a5 {
+          background-image: url('../../assets/icons/a5.png');
+        }
+        i.a6 {
+          background-image: url('../../assets/icons/a6.png');
+        }
+      }
+    }
   }
 </style>

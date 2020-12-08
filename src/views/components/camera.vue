@@ -14,9 +14,7 @@
         <li v-for="item in allData[`${currentModeType}`]" :key="item.name">
           <dl>
             <dt>
-              <button @click="handlerFetch">
-                {{ item.name }}
-              </button>
+              {{ item.name }}
             </dt>
             <dd>
               <a-select
@@ -42,7 +40,6 @@
 </template>
 
 <script>
-  import { getList } from '@/api/camera'
   import { mapGetters } from 'vuex'
 
   export default {
@@ -113,20 +110,6 @@
       handleSelectChange(value) {
         console.log(`Selected: ${value}`)
       },
-      handlerFetch() {
-        this.loading = true
-        getList({
-          pageSize: this.pagination.pageSize,
-          current: this.pagination.current,
-        }).then(({ data, total }) => {
-          console.log(data, '// data')
-          const pagination = { ...this.pagination }
-          pagination.total = total
-          this.loading = false
-          this.data = data
-          this.pagination = pagination
-        })
-      },
     },
   }
 </script>
@@ -137,32 +120,46 @@
     margin: 0;
     li {
       list-style: none;
-      padding-bottom: 5px;
+      padding: 5px 0;
       border-bottom: 1px solid @borderColor;
       dl {
+        margin: 0;
         padding: 0 10px;
         display: flex;
         flex-flow: row;
         justify-content: center;
         align-items: center;
         dt {
-          flex: 1;
-          background: #e1e1e1;
           margin: 0;
+          width: 60%;
+          color: @borderColor;
         }
         dd {
           margin: 0;
-          width: 30%;
+          flex: 1;
         }
       }
     }
   }
   ::v-deep.ant-radio-group {
     display: flex;
+    height: 44px;
+    line-height: 44px;
+    background: @backgroundColor;
+  }
+  ::v-deep.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled),
+  ::v-deep.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active,
+  ::v-deep.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
+    background: #575959;
+    border-color: @borderColor;
   }
   ::v-deep.ant-radio-button-wrapper {
     flex: 1;
     text-align: center;
+    height: 44px;
+    line-height: 44px;
+    background: none;
+    color: @borderColor;
   }
   ::v-deep.ant-select {
     width: 100%;

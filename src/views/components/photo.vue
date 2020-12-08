@@ -3,21 +3,29 @@
     <div class="loading-wrapper" v-if="loading">
       <a-spin />
     </div>
-    <div class="photo-list" v-else>
-      <span
-        v-for="(item, index) in data"
-        @click="() => showSingle(index)"
-        :key="item.id"
-      >
-        <img :src="item.src" />
-      </span>
+    <div class="photo-box" v-else>
+      <div class="photo-des-box">
+        <ul>
+          <li class="icon-1">照片数量：{{ totalpage }}</li>
+          <li class="icon-2">可拍照片：{{ totalphoto }}</li>
+        </ul>
+      </div>
+      <div class="photo-list">
+        <span
+          v-for="(item, index) in data"
+          @click="() => showSingle(index)"
+          :key="item.id"
+        >
+          <img :src="item.src" />
+        </span>
+      </div>
+      <a-pagination
+        size="small"
+        @change="paginationChange"
+        v-model:current="pageIndex"
+        :total="totalphoto"
+      />
     </div>
-    <a-pagination
-      @change="paginationChange"
-      v-model:current="pageIndex"
-      :total="totalphoto"
-    />
-
     <vue-easy-lightbox
       escDisabled
       moveDisabled
@@ -60,7 +68,7 @@
           // pageSize: this.pageSize,
           page: pageIndex == null ? this.pageIndex : pageIndex,
         }).then(({ data }) => {
-          this.totalphoto = data.totalphoto
+          this.totalpage = data.totalpage
           this.totalphoto = data.totalphoto
           this.data = data.items
           this.loading = false
@@ -105,5 +113,47 @@
     margin-bottom: 20px;
     padding: 30px 50px;
     margin: 20px 0;
+  }
+  .photo-des-box {
+    ul {
+      margin: 0;
+      padding: 10px;
+      li {
+        list-style: none;
+        color: @borderColor;
+        position: relative;
+      }
+      li::before {
+        position: relative;
+        width: 19px;
+        height: 16px;
+        content: '';
+        display: inline-block;
+      }
+      li.icon-1::before {
+        background: url('../../assets/icons/icon-1.png') center left no-repeat;
+        background-size: contain;
+      }
+      li.icon-2::before {
+        background: url('../../assets/icons/icon-2.png') center left no-repeat;
+        background-size: contain;
+        left: 5px;
+      }
+    }
+  }
+  .photo-box {
+    /deep/.ant-pagination-item-active {
+      background: none;
+      border-color: @borderColor;
+      color: @borderColor;
+    }
+    /deep/.ant-pagination-item {
+      border: none;
+      color: @borderColor;
+    }
+    /deep/.ant-pagination-item a,
+    /deep/.ant-pagination-jump-next {
+      color: @borderColor !important;
+    }
   }
 </style>
