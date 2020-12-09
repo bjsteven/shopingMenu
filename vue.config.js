@@ -190,6 +190,7 @@ module.exports = {
             'vab-padding': '20px',
             'vab-header-height': '65px',
             'borderColor': '#ffffff',
+            'text-height': '45px'
           },
         },
       },

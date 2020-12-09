@@ -97,7 +97,7 @@
       }
     }
     .vab-layout {
-      padding-left: 250px;
+      // padding-left: 250px;
       transition: all 0.2s;
     }
     .vab-mobile-layout {

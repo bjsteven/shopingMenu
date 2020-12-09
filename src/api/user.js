@@ -9,6 +9,15 @@ export async function login(data) {
   })
 }
 
+// 清空照片
+export async function deletephotos(data) {
+  return request({
+    url: 'deletephotos',
+    method: 'post',
+    data,
+  })
+}
+
 // 修改密码
 export async function updatePassword(data) {
   return request({
@@ -20,6 +29,7 @@ export async function updatePassword(data) {
 
 // 日出日落时间提交
 export async function daynighttime(data) {
+  console.log('🚀 ~ file: user.js ~ line 23 ~ daynighttime ~ data', data)
   return request({
     url: '/daynighttime',
     method: 'post',

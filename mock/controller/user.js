@@ -44,6 +44,23 @@ module.exports = [
       }
     },
   },
+  // 清空照片
+  {
+    url: '/deletephotos',
+    type: 'post',
+    response(config) {
+      if (!config) {
+        return {
+          code: 500,
+          msg: '参数错误',
+        }
+      }
+      return {
+        code: 200,
+        msg: 'success',
+      }
+    },
+  },
   // 日出日落时间提交
   {
     url: '/daynighttime',
