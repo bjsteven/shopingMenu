@@ -97,6 +97,7 @@
     deletephotos,
   } from '@/api/user'
   import { CaretDownOutlined } from '@ant-design/icons-vue'
+  import { recordRoute } from '@/config'
 
   export default {
     data() {
@@ -140,8 +141,14 @@
       }
     },
     methods: {
-      handleLoginout() {
-        console.log('退出')
+      async handleLoginout() {
+        await this.$store.dispatch('user/logout')
+        if (recordRoute) {
+          const fullPath = this.$route.fullPath
+          this.$router.push(`/login?redirect=${fullPath}`)
+        } else {
+          this.$router.push('/login')
+        }
       },
       async handleClearPhoto() {
         console.log('清除')
