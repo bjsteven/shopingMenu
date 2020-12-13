@@ -19,7 +19,7 @@
             <dd>
               <a-select
                 size="default"
-                :default-value="item.defaultValue"
+                v-model:value="item.defaultValue"
                 placeholder="选择"
                 @change="handleSelectChange"
               >
@@ -40,42 +40,17 @@
 </template>
 
 <script>
+  /* eslint-disable no-unused-vars */
   import { mapGetters } from 'vuex'
 
   export default {
     name: 'camera',
     data() {
-      return {
-        formLayout: 'horizontal',
-        form: {
-          name: '',
-          region: undefined,
-          date1: undefined,
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: '',
-        },
-        // test
-        loading: true,
-        pagination: {
-          showLessItems: true,
-          showQuickJumper: true,
-          showSizeChanger: true,
-          pageSize: 6,
-          current: 1,
-        },
-        data: [
-          {
-            id: '',
-          },
-        ],
-        query: {},
-      }
+      return {}
     },
     mounted() {
-      console.log(this.routes, '// routes')
-      console.log(this.$store.state, '// mapState')
+      // console.log(this.routes, '// routes')
+      // console.log(this.$store, '// mapState')
     },
     computed: {
       ...mapGetters({
@@ -105,10 +80,10 @@
         this.formLayout = e.target.value
       },
       handleChange(e) {
-        this.currentModeType = e.target.value
+        this.$store.commit('camera/setCurrentModeType', e.target.value)
       },
       handleSelectChange(value) {
-        console.log(`Selected: ${value}`)
+        // console.log(`Selected: ${value}`)
       },
     },
   }

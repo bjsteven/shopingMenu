@@ -35,6 +35,17 @@
         </li>
       </ul>
     </div>
+    <div class="device-ctrl-box">
+      <div class="button-wrapper">
+        <a-button
+          type="primary"
+          @click="handleCamSwitch"
+          :loading="camSwitchLoading"
+        >
+          拍照
+        </a-button>
+      </div>
+    </div>
     <a-radio-group
       :defaultValue="currentComponentName"
       button-style="solid"
@@ -56,7 +67,8 @@
   import photo from '@/views/components/photo'
   import camera from '@/views/components/camera'
   import moment from 'moment'
-  import { getDeviceInfo } from '@/api/deviceinfo'
+  import { getDeviceInfo, CamSwitch } from '@/api/deviceinfo'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'home-page',
@@ -77,6 +89,7 @@
         value: 1,
         mode: 'top',
         currentComponentName: 'camera',
+        camSwitchLoading: false,
       }
     },
     methods: {
@@ -90,6 +103,28 @@
         const res = await getDeviceInfo()
         this.deviceInfoData = res.data
       },
+      async handleCamSwitch() {
+        this.camSwitchLoading = true
+        const query = {
+          Mode: this.currentModeType,
+          CamIsOn: 'ON',
+          options: {},
+        }
+        Object.keys(this.allData[this.currentModeType]).forEach((it) => {
+          query.options[it] = this.allData[this.currentModeType][
+            it
+          ].defaultValue
+        })
+        const res = await CamSwitch(query)
+        console.log(res)
+        this.camSwitchLoading = false
+      },
+    },
+    computed: {
+      ...mapGetters({
+        allData: 'camera/allData',
+        currentModeType: 'camera/currentModeType',
+      }),
     },
     components: {
       user,
@@ -179,5 +214,23 @@
         }
       }
     }
+  }
+  /deep/.ant-btn {
+    padding: 0 10px;
+    border: 1px solid @borderColor;
+    border-radius: 2px 0 0 2px;
+    background: @borderColor;
+    color: @primary-color;
+    height: @text-height;
+    &::disabled {
+      color: red;
+    }
+  }
+  .device-ctrl-box {
+    margin: 10px 0;
+    padding: 0;
+    border-radius: 2px 0 0 2px;
+    color: @primary-color;
+    text-align: right;
   }
 </style>

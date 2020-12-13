@@ -26,4 +26,24 @@ module.exports = [
       }
     },
   },
+  {
+    url: '/CamSwitch',
+    type: 'post',
+    response(config) {
+      const { Mode } = config.body
+      if (!Mode) {
+        return {
+          code: 500,
+          msg: 'Mode不正确。',
+        }
+      }
+      return {
+        code: 200,
+        msg: 'success',
+        data: {
+          Mode,
+        },
+      }
+    },
+  },
 ]

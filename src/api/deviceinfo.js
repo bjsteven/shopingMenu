@@ -7,3 +7,11 @@ export function getDeviceInfo(params) {
     params,
   })
 }
+
+export function CamSwitch(data) {
+  return request({
+    url: 'CamSwitch',
+    method: 'post',
+    data,
+  })
+}
