@@ -19,9 +19,9 @@ export async function deletephotos(data) {
 }
 
 // 修改密码
-export async function updatePassword(data) {
+export async function passwordchange(data) {
   return request({
-    url: '/updatePassword',
+    url: '/passwordchange',
     method: 'post',
     data,
   })
@@ -29,7 +29,6 @@ export async function updatePassword(data) {
 
 // 日出日落时间提交
 export async function daynighttime(data) {
-  console.log('🚀 ~ file: user.js ~ line 23 ~ daynighttime ~ data', data)
   return request({
     url: '/daynighttime',
     method: 'post',

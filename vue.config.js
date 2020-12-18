@@ -61,6 +61,7 @@ module.exports = {
       warnings: true,
       errors: true,
     },
+    disableHostCheck: true,
     // 注释掉的地方是前端配置代理访问后端的示例
     // proxy: {
     //   [baseURL]: {
@@ -81,6 +82,7 @@ module.exports = {
           '@': resolve('src'),
           '*': resolve(''),
         },
+        extensions: ['.js', '.vue', '.json']
       },
       plugins: [
         new Webpack.ProvidePlugin(providePlugin),

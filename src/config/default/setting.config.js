@@ -23,7 +23,7 @@ const setting = {
   //简写
   abbreviation: 'vab-pro',
   //开发环境端口号
-  devPort: '9999',
+  devPort: '80',
   //版本号
   version: process.env.VUE_APP_VERSION,
   //pro版本copyright可随意修改
@@ -37,9 +37,9 @@ const setting = {
   //加载时显示文字
   loadingText: '正在加载中...',
   //token名称
-  tokenName: 'accessToken',
+  tokenName: 'token',
   //token在localStorage、sessionStorage、cookie存储的key的名称
-  tokenTableName: 'accessToken',
+  tokenTableName: 'token',
   //token存储位置localStorage sessionStorage cookie
   storage: 'localStorage',
   //token失效回退到登录页时是否记录本次的路由

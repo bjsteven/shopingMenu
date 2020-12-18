@@ -9,9 +9,8 @@ module.exports = [
     url: '/login',
     type: 'post',
     response(config) {
-      const { username } = config.body
-      const accessToken = accessTokens[username]
-      if (!accessToken) {
+      const { username, password } = config.body
+      if (!username || !password) {
         return {
           code: 500,
           msg: '帐户或密码不正确。',
@@ -20,13 +19,16 @@ module.exports = [
       return {
         code: 200,
         msg: 'success',
-        data: { accessToken },
+        data: {
+          status: 'succ',
+          token: '123456',
+        },
       }
     },
   },
   // 修改密码
   {
-    url: '/updatePassword',
+    url: '/passwordchange',
     type: 'post',
     response(config) {
       const { pass, checkPass } = config.body
@@ -66,21 +68,13 @@ module.exports = [
     url: '/daynighttime',
     type: 'post',
     response(config) {
-      const { Sunrise, Sunset } = config.body
+      console.log(config, '// configconfigconfig')
 
-      if (!Sunrise || !Sunset) {
-        return {
-          code: 500,
-          msg: '参数不正确',
-        }
-      }
+      const { Sunrise, Sunset } = config.body
       return {
-        code: 200,
-        msg: 'success',
-        data: {
-          Sunrise,
-          Sunset,
-        },
+        status: 'succ',
+        Sunrise,
+        Sunset,
       }
     },
   },

@@ -54,6 +54,8 @@ const instance = axios.create({
  */
 instance.interceptors.request.use(
   (config) => {
+    console.log(config, '// config in request')
+
     if (store.getters['user/accessToken'])
       config.headers[tokenName] = store.getters['user/accessToken']
     if (
@@ -64,6 +66,16 @@ instance.interceptors.request.use(
       config.data = qs.stringify(config.data)
     if (debounce.some((item) => config.url.includes(item))) {
       //这里写加载动画
+    }
+    if (config && config.method == 'post') {
+      config.data = config.data
+        ? {
+            ...config.data,
+            [`${tokenName}`]: store.getters['user/accessToken'],
+          }
+        : {
+            [`${tokenName}`]: store.getters['user/accessToken'],
+          }
     }
     return config
   },
@@ -79,9 +91,10 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => {
     if (loadingInstance) loadingInstance.close()
-
     const { data, config } = response
-    const { code, msg } = data
+    let { code, msg } = data
+    msg = msg ? msg : data.status
+    code = data.status == 'succ' ? 200 : 500
     // 操作正常Code数组
     const codeVerificationArray = isArray(successCode)
       ? [...successCode]
@@ -98,6 +111,8 @@ instance.interceptors.response.use(
     }
   },
   (error) => {
+    console.log(error, '// error222222222222222222222')
+
     if (loadingInstance) loadingInstance.close()
     const { response, message } = error
     if (error.response && error.response.data) {

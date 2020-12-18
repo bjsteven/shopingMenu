@@ -37,7 +37,15 @@ function handleMockArray() {
   getFiles('mock/controller')
   return mockArray
 }
+
+function getRandomBoolean() {
+  const arr = ((Math.random() / Math.random()) * 100).toString().split(1)
+  const res = arr[arr.length - 1].split('')
+  return +res[res.length - 1] > 4
+}
+
 module.exports = {
   handleRandomImage,
   handleMockArray,
+  getRandomBoolean,
 }

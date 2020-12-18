@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * @author chuzhixin 1204505056@qq.com
  * @description 登录、获取用户信息、退出登录、清除accessToken逻辑，不建议修改
@@ -99,7 +100,16 @@ const actions = {
    * @returns
    */
   async getUserInfo({ commit, dispatch, state }) {
-    const { data } = await getUserInfo(state.accessToken)
+    const { data } = {
+      code: 200,
+      msg: 'success',
+      data: {
+        roles: ['admin'],
+        ability: ['READ'],
+        username: 'admin',
+        avatar: 'https://i.gtimg.cn/club/item/face/img/2/15922_100.gif',
+      },
+    }
     if (!data) {
       message.error(`验证失败，请重新登录...`)
       return false

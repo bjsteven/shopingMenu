@@ -24,7 +24,7 @@
         <div class="button-wrapper">
           <a-button
             type="primary"
-            :disabled="Sunrise == '' || Sunset == ''"
+            :disabled="!Sunrise || !Sunset"
             :loading="daynighttimeLoading"
             @click="handleDaynighttime"
           >
@@ -32,7 +32,7 @@
           </a-button>
           <a-button
             type="primary"
-            :disabled="Sunrise == '' || Sunset == ''"
+            :disabled="!Sunrise || !Sunset"
             :loading="autoswitchLoading"
             @click="handleAutoswitch"
           >
@@ -91,7 +91,7 @@
 <script>
   /* eslint-disable no-unused-vars */
   import {
-    updatePassword,
+    passwordchange,
     daynighttime,
     autoswitch,
     deletephotos,
@@ -166,7 +166,7 @@
       },
       // 密码表单
       async handleUpdatePassword() {
-        const res = await updatePassword(this.ruleForm)
+        const res = await passwordchange(this.ruleForm)
         console.log(res, '// res')
       },
       // 密码表单
@@ -175,35 +175,38 @@
       },
       // 日出日落时间提交
       async handleDaynighttime() {
-        if (this.Sunrise == '' || this.Sunset == '') return
+        if (!this.Sunrise || !this.Sunset) return
         this.daynighttimeLoading = true
-        const res = await daynighttime({
-          Sunrise: this.Sunrise,
-          Sunset: this.Sunset,
-        })
-        if (res) {
-          setTimeout(() => {
-            this.daynighttimeLoading = false
-            console.log(res, '// ressssssss')
-          }, 3333)
-        }
+        console.log(this.Sunset.format('HH:mm'), '// sssssssssss')
+
+        // const res = await daynighttime({
+        //   Sunrise: this.Sunrise,
+        //   Sunset: this.Sunset,
+        // })
+        // if (res) {
+        //   setTimeout(() => {
+        //     this.daynighttimeLoading = false
+        //     console.log(res, '// ressssssss')
+        //   }, 3333)
+        // }
       },
 
       // 基于日出日落开启
       async handleAutoswitch() {
-        if (this.Sunrise == '' || this.Sunset == '') return
+        if (!this.Sunrise || !this.Sunset) return
+        console.log(this.Sunset.format('HH:mm'), '// cccccccc')
         this.autoswitchLoading = true
-        const res = await autoswitch({
-          data: {
-            Sunrise: this.Sunrise,
-          },
-        })
-        if (res) {
-          setTimeout(() => {
-            this.autoswitchLoading = false
-            console.log(res, '// ressssssss')
-          }, 3333)
-        }
+        // const res = await autoswitch({
+        //   data: {
+        //     Sunrise: this.Sunrise,
+        //   },
+        // })
+        // if (res) {
+        //   setTimeout(() => {
+        //     this.autoswitchLoading = false
+        //     console.log(res, '// ressssssss')
+        //   }, 3333)
+        // }
       },
     },
     components: {

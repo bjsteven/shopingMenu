@@ -35,14 +35,14 @@
         </li>
       </ul>
     </div>
-    <div class="device-ctrl-box">
+    <div class="device-ctrl-box" v-if="deviceInfoData">
       <div class="button-wrapper">
         <a-button
           type="primary"
           @click="handleCamSwitch"
           :loading="camSwitchLoading"
         >
-          拍照
+          {{ camIsOn ? '拍摄中' : '待机中' }}
         </a-button>
       </div>
     </div>
@@ -101,23 +101,28 @@
       },
       async handleGetDeviceInfo() {
         const res = await getDeviceInfo()
-        this.deviceInfoData = res.data
+        this.deviceInfoData = res
       },
       async handleCamSwitch() {
         this.camSwitchLoading = true
         const query = {
           Mode: this.currentModeType,
-          CamIsOn: 'ON',
-          options: {},
+          CamIsOn: this.camIsOn ? 'OFF' : 'ON',
+          // options: {},
         }
-        Object.keys(this.allData[this.currentModeType]).forEach((it) => {
-          query.options[it] = this.allData[this.currentModeType][
-            it
-          ].defaultValue
-        })
+        // Object.keys(this.allData[this.currentModeType]).forEach((it) => {
+        //   query.options[it] = this.allData[this.currentModeType][
+        //     it
+        //   ].defaultValue
+        // })
+        console.log(query, '// queryqueryquery')
+
         const res = await CamSwitch(query)
-        console.log(res)
-        this.camSwitchLoading = false
+        if (res.status === 'succ') {
+          this.camSwitchLoading = false
+          // 重新更新设备信息
+          this.handleGetDeviceInfo()
+        }
       },
     },
     computed: {
@@ -125,6 +130,13 @@
         allData: 'camera/allData',
         currentModeType: 'camera/currentModeType',
       }),
+      camIsOn() {
+        return (
+          this.deviceInfoData &&
+          this.deviceInfoData.CamIsOn &&
+          this.deviceInfoData.CamIsOn === 'ON'
+        )
+      },
     },
     components: {
       user,
