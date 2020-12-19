@@ -70,8 +70,10 @@ const actions = {
    * @param {*} userInfo
    */
   async login({ commit }, userInfo) {
-    const { data } = await login(userInfo)
-    const accessToken = data[tokenName]
+    const res = await login(userInfo)
+    console.log('🚀 ~ file: user.res', res[`${tokenName}`])
+    const accessToken = res[`${tokenName}`]
+    // const accessToken = data[tokenName]
     if (accessToken) {
       commit('setAccessToken', accessToken)
       const hour = new Date().getHours()
@@ -132,7 +134,8 @@ const actions = {
    * @param {*} { dispatch }
    */
   async logout({ dispatch }) {
-    await logout(state.accessToken)
+    // const res = await logout(state.accessToken)
+    // console.log(res, '// res')
     await dispatch('resetAll')
   },
   /**

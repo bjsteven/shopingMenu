@@ -62,17 +62,18 @@
       this.handlerFetch()
     },
     methods: {
-      handlerFetch(pageIndex = null) {
+      async handlerFetch(pageIndex = null) {
         this.loading = true
-        photolisting({
+        const res = await photolisting({
           // pageSize: this.pageSize,
           page: pageIndex == null ? this.pageIndex : pageIndex,
-        }).then(({ data }) => {
-          this.totalpage = data.totalpage
-          this.totalphoto = data.totalphoto
-          this.data = data.items
-          this.loading = false
         })
+        if (res && res.status && res.status === 'succ') {
+          this.totalpage = res.totalpage
+          this.totalphoto = res.totalphoto
+          this.data = res.items
+        }
+        this.loading = false
       },
       showSingle(index) {
         this.imgs = this.data

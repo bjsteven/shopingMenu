@@ -17,12 +17,8 @@ module.exports = [
         }
       }
       return {
-        code: 200,
-        msg: 'success',
-        data: {
-          status: 'succ',
-          token: '123456',
-        },
+        status: 'succ',
+        token: '123456',
       }
     },
   },
@@ -31,18 +27,10 @@ module.exports = [
     url: '/passwordchange',
     type: 'post',
     response(config) {
-      const { pass, checkPass } = config.body
+      console.log(config, '// in passwordchange')
 
-      if (!pass || !checkPass) {
-        return {
-          code: 500,
-          msg: '密码不正确。',
-        }
-      }
       return {
-        code: 200,
-        msg: 'success',
-        data: { pass },
+        status: 'succ',
       }
     },
   },
@@ -51,15 +39,10 @@ module.exports = [
     url: '/deletephotos',
     type: 'post',
     response(config) {
-      if (!config) {
-        return {
-          code: 500,
-          msg: '参数错误',
-        }
-      }
+      console.log(config, '// in deletephotos')
+
       return {
-        code: 200,
-        msg: 'success',
+        status: 'succ',
       }
     },
   },
@@ -83,18 +66,9 @@ module.exports = [
     url: '/autoswitch',
     type: 'post',
     response(config) {
-      // const { Sunrise, Sunset } = config.body
-      const { data } = config.body
-      if (!data) {
-        return {
-          code: 500,
-          msg: '参数不正确',
-        }
-      }
+      console.log(config, '// configconfigconfig')
       return {
-        code: 200,
-        msg: 'success',
-        data,
+        status: 'succ',
       }
     },
   },

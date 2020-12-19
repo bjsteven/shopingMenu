@@ -6,7 +6,7 @@
         <ul>
           <li>
             <div>
-              <a-time-picker v-model:value="Sunrise">
+              <a-time-picker v-model:value="Sunrise" format="HH:mm">
                 <template #suffixIcon><CaretDownOutlined /></template>
               </a-time-picker>
             </div>
@@ -14,7 +14,7 @@
           </li>
           <li>
             <div>
-              <a-time-picker v-model:value="Sunset">
+              <a-time-picker v-model:value="Sunset" format="HH:mm">
                 <template #suffixIcon><CaretDownOutlined /></template>
               </a-time-picker>
             </div>
@@ -24,7 +24,6 @@
         <div class="button-wrapper">
           <a-button
             type="primary"
-            :disabled="!Sunrise || !Sunset"
             :loading="daynighttimeLoading"
             @click="handleDaynighttime"
           >
@@ -32,7 +31,6 @@
           </a-button>
           <a-button
             type="primary"
-            :disabled="!Sunrise || !Sunset"
             :loading="autoswitchLoading"
             @click="handleAutoswitch"
           >
@@ -98,8 +96,16 @@
   } from '@/api/user'
   import { CaretDownOutlined } from '@ant-design/icons-vue'
   import { recordRoute } from '@/config'
+  import { message, notification } from 'ant-design-vue'
+  import { mapGetters } from 'vuex'
 
   export default {
+    computed: {
+      ...mapGetters({
+        allData: 'camera/allData',
+        currentModeType: 'camera/currentModeType',
+      }),
+    },
     data() {
       let validatePass = async (rule, value) => {
         if (value === '') {
@@ -151,13 +157,15 @@
         }
       },
       async handleClearPhoto() {
-        console.log('清除')
         this.clearPhotoLoading = true
-        const res = await deletephotos()
-        if (res) {
-          this.clearPhotoLoading = false
-          console.log(res, '// res in deletephotos')
+        const query = {
+          deletephotos: 'yes',
         }
+        const res = await deletephotos(query)
+        if (res && res.status && res.status === 'succ') {
+          message.success(`删除成功!`)
+        }
+        this.clearPhotoLoading = false
       },
       // 密码表单
       handleFinish(values) {
@@ -166,52 +174,72 @@
       },
       // 密码表单
       async handleUpdatePassword() {
-        const res = await passwordchange(this.ruleForm)
-        console.log(res, '// res')
+        const query = {
+          newpassword: this.ruleForm.pass,
+        }
+        const res = await passwordchange(query)
+        if (res && res.status && res.status === 'succ') {
+          message.success(`修改成功!`)
+        }
       },
       // 密码表单
       handleFinishFailed(errors) {
         console.log(errors, '// failed')
       },
-      // 日出日落时间提交
+      //  提交
       async handleDaynighttime() {
-        if (!this.Sunrise || !this.Sunset) return
+        if (this.Sunrise == '' || this.Sunset == '') {
+          message.error(`请选择日出日落时间`)
+          return
+        }
         this.daynighttimeLoading = true
-        console.log(this.Sunset.format('HH:mm'), '// sssssssssss')
 
-        // const res = await daynighttime({
-        //   Sunrise: this.Sunrise,
-        //   Sunset: this.Sunset,
-        // })
-        // if (res) {
-        //   setTimeout(() => {
-        //     this.daynighttimeLoading = false
-        //     console.log(res, '// ressssssss')
-        //   }, 3333)
-        // }
+        const res = await daynighttime({
+          Sunrise: this.Sunrise.format('HH:mm'),
+          Sunset: this.Sunset.format('HH:mm'),
+        })
+
+        if (res) {
+          console.log(res, '// res')
+
+          this.daynighttimeLoading = false
+        }
       },
 
-      // 基于日出日落开启
+      //  开启
       async handleAutoswitch() {
-        if (!this.Sunrise || !this.Sunset) return
-        console.log(this.Sunset.format('HH:mm'), '// cccccccc')
         this.autoswitchLoading = true
-        // const res = await autoswitch({
-        //   data: {
-        //     Sunrise: this.Sunrise,
-        //   },
-        // })
-        // if (res) {
-        //   setTimeout(() => {
-        //     this.autoswitchLoading = false
-        //     console.log(res, '// ressssssss')
-        //   }, 3333)
-        // }
+        const query = {
+          Modeset: this.currentModeType,
+        }
+        console.log(this.currentModeType, '// type')
+        if (this.currentModeType === 'user') {
+          query['user'] = toList(this.allData['user'])
+        } else {
+          query['Modeset'] = 'auto'
+          query['auto'] = toList(this.allData['auto'])
+          query['night'] = toList(this.allData['night'])
+        }
+        const res = await autoswitch(query)
+        if (res) {
+          console.log(res, '// res')
+          this.autoswitchLoading = false
+        }
       },
     },
     components: {
       CaretDownOutlined,
     },
+  }
+  function toList(obj) {
+    const res = []
+    Object.keys(obj).forEach((key) => {
+      const value = obj[key].defaultValue
+      res.push({
+        [`${key}`]: value,
+      })
+    })
+    return res
   }
 </script>
 
