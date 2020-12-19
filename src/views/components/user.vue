@@ -288,10 +288,10 @@
         padding: 0;
         text-align: center;
         div {
-          /deep/.ant-time-picker {
+          ::v-deep.ant-time-picker {
             width: 100%;
             height: @text-height;
-            /deep/.ant-time-picker-input {
+            ::v-deep.ant-time-picker-input {
               height: 100%;
             }
           }
@@ -312,22 +312,22 @@
     border-radius: 2px 0 0 2px;
     color: @primary-color;
     padding-bottom: 0;
-    /deep/.ant-form-item:last-child {
+    ::v-deep.ant-form-item:last-child {
       margin-bottom: 10px;
     }
-    /deep/.ant-form-item {
+    ::v-deep.ant-form-item {
       flex: 1;
       width: 100%;
       margin-bottom: 10px;
-      /deep/.ant-col {
+      ::v-deep.ant-col {
         width: 100%;
       }
-      /deep/input {
+      ::v-deepinput {
         height: @text-height;
       }
     }
   }
-  /deep/.ant-btn {
+  ::v-deep.ant-btn {
     padding: 0 10px;
     border: 1px solid @borderColor;
     border-radius: 2px 0 0 2px;

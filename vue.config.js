@@ -82,7 +82,6 @@ module.exports = {
           '@': resolve('src'),
           '*': resolve(''),
         },
-        extensions: ['.js', '.vue', '.json']
       },
       plugins: [
         new Webpack.ProvidePlugin(providePlugin),

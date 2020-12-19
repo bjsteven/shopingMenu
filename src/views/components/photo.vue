@@ -41,6 +41,7 @@
   import { photolisting } from '@/api/photo'
   // https://github.com/XiongAmao/vue-easy-lightbox
   import VueEasyLightbox from 'vue-easy-lightbox'
+
   export default {
     name: 'photo',
     components: {
@@ -143,17 +144,17 @@
     }
   }
   .photo-box {
-    /deep/.ant-pagination-item-active {
+    ::v-deep.ant-pagination-item-active {
       background: none;
       border-color: @borderColor;
       color: @borderColor;
     }
-    /deep/.ant-pagination-item {
+    ::v-deep.ant-pagination-item {
       border: none;
       color: @borderColor;
     }
-    /deep/.ant-pagination-item a,
-    /deep/.ant-pagination-jump-next {
+    ::v-deep.ant-pagination-item a,
+    ::v-deep.ant-pagination-jump-next {
       color: @borderColor !important;
     }
   }
