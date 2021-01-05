@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios'
 import {
   baseURL,
@@ -65,6 +66,7 @@ instance.interceptors.request.use(
     )
       config.data = qs.stringify(config.data)
     if (debounce.some((item) => config.url.includes(item))) {
+      // config.data = qs.stringify(config.data)
       //这里写加载动画
     }
     if (config && config.method == 'post') {
@@ -90,6 +92,7 @@ instance.interceptors.request.use(
  */
 instance.interceptors.response.use(
   (response) => {
+    console.log(response, '// response in response')
     if (loadingInstance) loadingInstance.close()
     const { data, config } = response
     let { code, msg } = data

@@ -13,13 +13,13 @@
           <i class="a1"></i>
           <span>{{ deviceInfoData.BatteryVol }}</span>
         </li>
-        <li>
+        <!-- <li>
           <i class="a2"></i>
           <span>{{ deviceInfoData.MemoryVol }}%</span>
-        </li>
+        </li> -->
         <li>
           <i class="a3"></i>
-          <span>{{ deviceInfoData.CPUtemp }}d</span>
+          <span>{{ deviceInfoData.CPUtemp }}℃</span>
         </li>
         <li>
           <i class="a4"></i>

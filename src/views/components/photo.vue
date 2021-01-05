@@ -6,8 +6,8 @@
     <div class="photo-box" v-else>
       <div class="photo-des-box">
         <ul>
-          <li class="icon-1">照片数量：{{ totalpage }}</li>
-          <li class="icon-2">可拍照片：{{ totalphoto }}</li>
+          <li class="icon-1">照片数量：{{ totalphoto }}</li>
+          <li class="icon-2">总页数：{{ totalpage }}</li>
         </ul>
       </div>
       <div class="photo-list">
@@ -77,7 +77,12 @@
         this.loading = false
       },
       showSingle(index) {
-        this.imgs = this.data
+        this.imgs = this.data.map((it) => {
+          return {
+            ...it,
+            title: it.time,
+          }
+        })
         this.index = index
         this.show()
       },

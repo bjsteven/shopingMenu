@@ -6,7 +6,11 @@
         <ul>
           <li>
             <div>
-              <a-time-picker v-model:value="Sunrise" format="HH:mm">
+              <a-time-picker
+                v-model:value="Sunrise"
+                format="HH:mm"
+                :inputReadOnly="true"
+              >
                 <template #suffixIcon><CaretDownOutlined /></template>
               </a-time-picker>
             </div>
@@ -14,7 +18,11 @@
           </li>
           <li>
             <div>
-              <a-time-picker v-model:value="Sunset" format="HH:mm">
+              <a-time-picker
+                v-model:value="Sunset"
+                format="HH:mm"
+                :inputReadOnly="true"
+              >
                 <template #suffixIcon><CaretDownOutlined /></template>
               </a-time-picker>
             </div>
@@ -34,7 +42,13 @@
             :loading="autoswitchLoading"
             @click="handleAutoswitch"
           >
-            {{ autoswitchLoading ? '开启中' : '开启' }}
+            {{
+              autoswitchLoading
+                ? '开启中'
+                : currentModeType === 'user'
+                ? '开启AUTO'
+                : '开启User'
+            }}
           </a-button>
         </div>
       </div>
@@ -67,7 +81,7 @@
       </a-form-item>
       <a-form-item>
         <a-button style="width: 100%" type="primary" html-type="submit">
-          提交
+          用户密码修改
         </a-button>
       </a-form-item>
     </a-form>
@@ -98,6 +112,7 @@
   import { recordRoute } from '@/config'
   import { message, notification } from 'ant-design-vue'
   import { mapGetters } from 'vuex'
+  import { getDeviceInfo, CamSwitch } from '@/api/deviceinfo'
 
   export default {
     computed: {
@@ -212,17 +227,22 @@
         const query = {
           Modeset: this.currentModeType,
         }
-        console.log(this.currentModeType, '// type')
+        console.log(this.currentModeType, '// currentModeType in frontEnd')
         if (this.currentModeType === 'user') {
-          query['user'] = toList(this.allData['user'])
-        } else {
           query['Modeset'] = 'auto'
           query['auto'] = toList(this.allData['auto'])
           query['night'] = toList(this.allData['night'])
+        } else {
+          query['user'] = toList(this.allData['user'])
+          query['Modeset'] = 'user'
         }
         const res = await autoswitch(query)
         if (res) {
-          console.log(res, '// res')
+          console.log(res, '// response in autoswitch')
+          const deviceInfo = await getDeviceInfo()
+          console.log(deviceInfo, '// response in deviceInfo')
+          const { CurrentMode } = deviceInfo
+          this.$store.commit('camera/setCurrentModeType', CurrentMode)
           this.autoswitchLoading = false
         }
       },
