@@ -164,3 +164,9 @@
     }
   }
 </style>
+
+<style>
+  .vel-img-title {
+    z-index: 1234;
+  }
+</style>

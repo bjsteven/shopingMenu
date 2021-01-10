@@ -80,7 +80,7 @@
         this.formLayout = e.target.value
       },
       handleChange(e) {
-        // this.$store.commit('camera/setCurrentModeType', e.target.value)
+        this.$store.commit('camera/setCurrentModeType', e.target.value)
       },
       handleSelectChange(value) {
         // console.log(`Selected: ${value}`)
