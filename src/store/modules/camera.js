@@ -17,6 +17,9 @@ const mutations = {
   setCurrentModeType(state, val) {
     state.currentModeType = val
   },
+  // setAllData(state, data) {
+  //   state.allData = data
+  // },
 }
 const actions = {}
 export default { state, getters, mutations, actions }

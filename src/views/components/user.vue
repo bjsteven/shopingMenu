@@ -5,26 +5,29 @@
       <div class="time-range-wrapper">
         <ul>
           <li>
-            <div>
-              <a-time-picker
+            <div class="time-picker" @click="handlePicker('Sunrise')">
+              {{ Sunrise ? Sunrise : '-' }}
+              <!-- <a-time-picker
                 v-model:value="Sunrise"
                 format="HH:mm"
                 :inputReadOnly="true"
+                style="width: 80%"
               >
                 <template #suffixIcon><CaretDownOutlined /></template>
-              </a-time-picker>
+              </a-time-picker> -->
             </div>
             <p>日出时间</p>
           </li>
           <li>
-            <div>
-              <a-time-picker
+            <div class="time-picker" @click="handlePicker('Sunset')">
+              {{ Sunset ? Sunset : '-' }}
+              <!-- <a-time-picker
                 v-model:value="Sunset"
                 format="HH:mm"
                 :inputReadOnly="true"
               >
                 <template #suffixIcon><CaretDownOutlined /></template>
-              </a-time-picker>
+              </a-time-picker> -->
             </div>
             <p>日落时间</p>
           </li>
@@ -94,9 +97,20 @@
         >
           删除照片
         </a-button>
+        <a-button type="primary" @click="handleDownload">批量下载</a-button>
         <a-button type="primary" @click="handleLoginout">退出登录</a-button>
       </div>
     </div>
+    <van-popup :show="showPicker" position="bottom">
+      <DatetimePicker
+        v-model="currentTime"
+        type="time"
+        title="选择时间"
+        :min-hour="10"
+        :max-hour="20"
+        @confirm="onConfirm"
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -107,6 +121,7 @@
     daynighttime,
     autoswitch,
     deletephotos,
+    getDownload,
   } from '@/api/user'
   import { CaretDownOutlined } from '@ant-design/icons-vue'
   import { recordRoute } from '@/config'
@@ -114,12 +129,20 @@
   import { mapGetters } from 'vuex'
   import { getDeviceInfo, CamSwitch } from '@/api/deviceinfo'
 
+  import { DatetimePicker, Popup } from 'vant'
+  import 'vant/lib/index.less'
+
   export default {
     computed: {
       ...mapGetters({
         allData: 'camera/allData',
         currentModeType: 'camera/currentModeType',
       }),
+      currentTime: {
+        get(val) {
+          return this[`${this.pickerName}`]
+        },
+      },
     },
     data() {
       let validatePass = async (rule, value) => {
@@ -159,6 +182,8 @@
         },
         Sunrise: '',
         Sunset: '',
+        pickerName: null,
+        showPicker: false,
       }
     },
     methods: {
@@ -171,16 +196,43 @@
           this.$router.push('/login')
         }
       },
+      async handleDownload() {
+        const res = await getDownload()
+        console.log(res, '// res')
+        const _this = this
+        if (res && res.downloadlink) {
+          this.$confirm({
+            title: '下载',
+            okText: '新窗口打开',
+            cancelText: '关闭',
+            content: res.downloadlink,
+            onOk() {
+              return new Promise((resolve, reject) => {
+                window.open(res.downloadlink, '_blank')
+                setTimeout(Math.random() > 0.5 ? resolve : reject, 1000)
+              }).catch(() => console.log('Oops errors!'))
+            },
+          })
+        }
+      },
       async handleClearPhoto() {
-        this.clearPhotoLoading = true
-        const query = {
-          deletephotos: 'yes',
-        }
-        const res = await deletephotos(query)
-        if (res && res.status && res.status === 'succ') {
-          message.success(`删除成功!`)
-        }
-        this.clearPhotoLoading = false
+        const _this = this
+        this.$confirm({
+          title: '提示',
+          content: '确定删除吗',
+          async onOk() {
+            _this.clearPhotoLoading = true
+            const query = {
+              deletephotos: 'yes',
+            }
+            const res = await deletephotos(query)
+            if (res && res.status && res.status === 'succ') {
+              message.success(`删除成功!`)
+            }
+            _this.clearPhotoLoading = false
+          },
+          onCancel() {},
+        })
       },
       // 密码表单
       handleFinish(values) {
@@ -240,15 +292,32 @@
         if (res) {
           console.log(res, '// response in autoswitch')
           const deviceInfo = await getDeviceInfo()
-          console.log(deviceInfo, '// response in deviceInfo')
           const { CurrentMode } = deviceInfo
           this.$store.commit('camera/setCurrentModeType', CurrentMode)
+          console.log(CurrentMode, '// CurrentMode in deviceInfo')
+          // this.$store.commit('camera/setCurrentModeType', e.target.value)
           this.autoswitchLoading = false
         }
+      },
+
+      handlePicker(name) {
+        this.pickerName = name
+        this.showPicker = true
+      },
+
+      onConfirm(item) {
+        this.showPicker = false
+        this[`${this.pickerName}`] = item
+        this.$nextTick(() => {
+          this.pickerName = null
+          console.log(this.pickerName, '// pickerName')
+        })
       },
     },
     components: {
       CaretDownOutlined,
+      DatetimePicker,
+      'van-popup': Popup,
     },
   }
   function toList(obj) {
@@ -307,6 +376,7 @@
         list-style: none;
         padding: 0;
         text-align: center;
+        width: 40%;
         div {
           ::v-deep.ant-time-picker {
             width: 100%;
@@ -324,6 +394,12 @@
           margin-bottom: 10px;
         }
       }
+    }
+    .time-picker {
+      color: @borderColor;
+      font-size: 14px;
+      border: 1px solid @borderColor;
+      width: 100%;
     }
   }
   .change-pass-wrapper {

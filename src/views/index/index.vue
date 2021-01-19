@@ -13,10 +13,10 @@
           <i class="a1"></i>
           <span>{{ deviceInfoData.BatteryVol }}</span>
         </li>
-        <!-- <li>
+        <li>
           <i class="a2"></i>
-          <span>{{ deviceInfoData.MemoryVol }}%</span>
-        </li> -->
+          <span>{{ deviceInfoData.MemoryVol }}</span>
+        </li>
         <li>
           <i class="a3"></i>
           <span>{{ deviceInfoData.CPUtemp }}℃</span>
@@ -58,6 +58,11 @@
     <div class="component-wrapper">
       <component :is="currentComponentName"></component>
     </div>
+    <div
+      style="text-align: center; padding: 14px; color: #fff; padding-top: 33px"
+    >
+      FARPOV 版权所有 备案号：湘ICP备2020019150号-1
+    </div>
   </div>
 </template>
 
@@ -67,8 +72,9 @@
   import photo from '@/views/components/photo'
   import camera from '@/views/components/camera'
   import moment from 'moment'
-  import { getDeviceInfo, CamSwitch } from '@/api/deviceinfo'
+  import { getDeviceInfo, CamSwitch, getDevicesetup } from '@/api/deviceinfo'
   import { mapGetters } from 'vuex'
+  import lodash from 'lodash'
 
   export default {
     name: 'home-page',
@@ -79,6 +85,7 @@
       this.date1 = date[1]
       this.date2 = allDate.getFullYear()
       this.handleGetDeviceInfo()
+      this.handleGetDevicesetup()
     },
     data() {
       return {
@@ -102,6 +109,41 @@
       async handleGetDeviceInfo() {
         const res = await getDeviceInfo()
         this.deviceInfoData = res
+        const { CurrentMode } = res
+        this.$store.commit('camera/setCurrentModeType', CurrentMode)
+      },
+      async handleGetDevicesetup() {
+        const res = await getDevicesetup()
+        console.log(res, '// devicesetup res')
+        console.log(this.allData, '// this.allData')
+        const { data } = res
+        if (data) {
+          let newData = {}
+          Object.keys(data).forEach((mode) => {
+            newData[mode] = {}
+            data[mode].forEach((item) => {
+              newData[mode] = {
+                ...newData[mode],
+                ...item,
+              }
+            })
+          })
+          newData['user'] = lodash.cloneDeep(newData['auto'])
+          Object.keys(this.allData).forEach((mode) => {
+            if (this.allData[mode]) {
+              for (let key in this.allData[mode]) {
+                if (newData[mode] && newData[mode][key]) {
+                  // console.group('-----------')
+                  // console.log(key, '// key')
+                  // console.log(newData[mode][key], '// item')
+                  // console.log(this.allData[mode][key].defaultValue, '// ddd')
+                  // console.groupEnd()
+                  this.allData[mode][key]['defaultValue'] = newData[mode][key]
+                }
+              }
+            }
+          })
+        }
       },
       async handleCamSwitch() {
         this.camSwitchLoading = true

@@ -8,6 +8,14 @@ export function getDeviceInfo(params) {
   })
 }
 
+export function getDevicesetup(params) {
+  return request({
+    url: '/devicesetup',
+    method: 'post',
+    params,
+  })
+}
+
 export function CamSwitch(data) {
   return request({
     url: 'CamSwitch',

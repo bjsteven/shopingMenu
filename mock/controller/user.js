@@ -46,6 +46,19 @@ module.exports = [
       }
     },
   },
+  // xiazai照片
+  {
+    url: '/download',
+    type: 'post',
+    response(config) {
+      console.log(config, '// in deletephotos')
+
+      return {
+        status: 'succ',
+        downloadlink: 'http://www.ppcam.cn/static/zipphoto/xxxx.txt',
+      }
+    },
+  },
   // 日出日落时间提交
   {
     url: '/daynighttime',

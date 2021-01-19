@@ -15,7 +15,22 @@ module.exports = [
         CPUusage: '99', // CPU使用率
         isCharged: 'ON', // 是否充电中
         CamIsOn: randomBoolean ? 'ON' : 'OFF', // 摄像头是否工作中
-        CurrentMode: 'auto', // 当前拍摄模式 自动（夜间）/自定义
+        CurrentMode: 'user', // 当前拍摄模式 自动（夜间）/自定义
+      }
+    },
+  },
+  {
+    url: '/devicesetup',
+    type: 'post',
+    response(config) {
+      console.log(config, '// config')
+      // const randomBoolean = getRandomBoolean()
+      return {
+        data: {
+          auto: [{ shutter: '1/200' }, { ISO: '100' }],
+          night: [{ shutter: '1/100' }, { ISO: '200' }],
+        },
+        status: 'succ',
       }
     },
   },

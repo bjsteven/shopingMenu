@@ -18,6 +18,15 @@ export async function deletephotos(data) {
   })
 }
 
+// 批量下载
+export async function getDownload(data) {
+  return request({
+    url: 'download',
+    method: 'post',
+    data,
+  })
+}
+
 // 修改密码
 export async function passwordchange(data) {
   return request({

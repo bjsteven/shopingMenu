@@ -11,16 +11,22 @@
     </a-radio-group>
     <div>
       <ul class="device-option-list">
-        <li v-for="item in allData[`${currentModeType}`]" :key="item.name">
+        <li
+          v-for="item in allData[`${currentModeType}`]"
+          :key="item.name"
+          @click="handlePicker(item.name)"
+        >
           <dl>
-            <dt>
-              {{ item.name }}
-            </dt>
+            <dt>{{ item.name }}：</dt>
             <dd>
+              {{ item.defaultValue }}
+            </dd>
+            <!-- <dd>
               <a-select
                 size="default"
                 v-model:value="item.defaultValue"
                 placeholder="选择"
+                optionFilterProp="children"
                 @change="handleSelectChange"
               >
                 <a-select-option
@@ -31,32 +37,59 @@
                   {{ it.value }}
                 </a-select-option>
               </a-select>
-            </dd>
+            </dd> -->
           </dl>
         </li>
       </ul>
     </div>
+
+    <van-popup :show="showPicker" position="bottom">
+      <van-picker
+        show-toolbar
+        v-if="pickerItemOptions"
+        :columns="pickerItemOptions"
+        @confirm="onConfirm"
+        @cancel="showPicker = false"
+      />
+    </van-popup>
   </div>
 </template>
 
 <script>
+  import { Picker, Popup } from 'vant'
+  import 'vant/lib/index.less'
+
   /* eslint-disable no-unused-vars */
   import { mapGetters } from 'vuex'
 
   export default {
     name: 'camera',
-    data() {
-      return {}
+    components: {
+      'van-picker': Picker,
+      'van-popup': Popup,
     },
-    mounted() {
-      // console.log(this.routes, '// routes')
-      // console.log(this.$store, '// mapState')
+    data() {
+      return {
+        showPicker: false,
+        pickerName: null,
+      }
     },
     computed: {
       ...mapGetters({
         allData: 'camera/allData',
         currentModeType: 'camera/currentModeType',
       }),
+      pickerItemOptions() {
+        if (this.pickerName) {
+          // return ['山东', '潍坊']
+          return this.allData[this.currentModeType][
+            this.pickerName
+          ].options.map((it) => it.value)
+        } else {
+          // return ['北京', '上海']
+          return []
+        }
+      },
       formItemLayout() {
         const { formLayout } = this
         return formLayout === 'horizontal'
@@ -76,15 +109,26 @@
       },
     },
     methods: {
-      handleFormLayoutChange(e) {
-        this.formLayout = e.target.value
+      onConfirm(item) {
+        // console.log(item, '// onConfirm')
+        // console.log(this.currentModeType, '// currentModeType')
+        // console.log(this.pickerName, '// pickerName')
+        this.allData[this.currentModeType][this.pickerName].defaultValue = item
+        this.showPicker = false
       },
+      handlePicker(name) {
+        this.pickerName = name
+        this.showPicker = true
+      },
+      // handleFormLayoutChange(e) {
+      //   this.formLayout = e.target.value
+      // },
       handleChange(e) {
         this.$store.commit('camera/setCurrentModeType', e.target.value)
       },
-      handleSelectChange(value) {
-        // console.log(`Selected: ${value}`)
-      },
+      // handleSelectChange(item) {
+      //   console.log(item.id, '// item')
+      // },
     },
   }
 </script>
@@ -95,7 +139,7 @@
     margin: 0;
     li {
       list-style: none;
-      padding: 5px 0;
+      padding: 9px 0;
       border-bottom: 1px solid @borderColor;
       dl {
         margin: 0;
@@ -106,12 +150,13 @@
         align-items: center;
         dt {
           margin: 0;
-          width: 60%;
+          display: inline-block;
           color: @borderColor;
         }
         dd {
           margin: 0;
           flex: 1;
+          color: @borderColor;
         }
       }
     }
