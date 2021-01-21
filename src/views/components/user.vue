@@ -56,6 +56,7 @@
         </div>
       </div>
     </div>
+    <h4>用户密码</h4>
     <a-form
       class="change-pass-wrapper"
       name="custom-validation"
@@ -65,6 +66,7 @@
       v-bind="layout"
       @finish="handleFinish"
       @finishFailed="handleFinishFailed"
+      style="margin: 10px 0"
     >
       <a-form-item required has-feedback name="pass">
         <a-input
@@ -88,6 +90,7 @@
         </a-button>
       </a-form-item>
     </a-form>
+    <h4>系统控制</h4>
     <div class="device-ctrl-box">
       <div class="button-wrapper">
         <a-button
@@ -102,6 +105,7 @@
       </div>
     </div>
     <van-popup :show="showPicker" position="bottom">
+      <!-- <div style="padding: 55px 15px; color: red">test</div> -->
       <DatetimePicker
         v-model="currentTime"
         type="time"
@@ -109,6 +113,11 @@
         :min-hour="10"
         :max-hour="20"
         @confirm="onConfirm"
+        @cancel="
+          () => {
+            showPicker = false
+          }
+        "
       />
     </van-popup>
   </div>
@@ -397,7 +406,7 @@
     }
     .time-picker {
       color: @borderColor;
-      font-size: 14px;
+      font-size: 24px;
       border: 1px solid @borderColor;
       width: 100%;
     }

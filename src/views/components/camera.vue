@@ -18,9 +18,7 @@
         >
           <dl>
             <dt>{{ item.name }}：</dt>
-            <dd>
-              {{ item.defaultValue }}
-            </dd>
+            <dd>{{ item.defaultValue }} ></dd>
             <!-- <dd>
               <a-select
                 size="default"
@@ -146,16 +144,13 @@
         padding: 0 10px;
         display: flex;
         flex-flow: row;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
         dt {
-          margin: 0;
           display: inline-block;
           color: @borderColor;
         }
         dd {
-          margin: 0;
-          flex: 1;
           color: @borderColor;
         }
       }

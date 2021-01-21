@@ -59,7 +59,13 @@
       <component :is="currentComponentName"></component>
     </div>
     <div
-      style="text-align: center; padding: 14px; color: #fff; padding-top: 33px"
+      style="
+        text-align: center;
+        font-size: 12px;
+        padding: 14px;
+        color: #fff;
+        padding-top: 33px;
+      "
     >
       FARPOV 版权所有 备案号：湘ICP备2020019150号-1
     </div>
