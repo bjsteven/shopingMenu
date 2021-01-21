@@ -189,8 +189,8 @@
           labelCol: { span: 4 },
           wrapperCol: { span: 24 },
         },
-        Sunrise: '',
-        Sunset: '',
+        Sunrise: '06:30',
+        Sunset: '18:30',
         pickerName: null,
         showPicker: false,
       }

@@ -8,14 +8,19 @@ const state = {
     user: lodash.cloneDeep(allData),
   },
   currentModeType: 'auto',
+  isDesktop: false,
 }
 const getters = {
   currentModeType: (state) => state.currentModeType,
   allData: (state) => state.allData,
+  isDesktop: (state) => state.isDesktop,
 }
 const mutations = {
   setCurrentModeType(state, val) {
     state.currentModeType = val
+  },
+  setDesktop(state, status) {
+    state.isDesktop = status
   },
   // setAllData(state, data) {
   //   state.allData = data

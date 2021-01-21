@@ -21,6 +21,7 @@
     "core-js": "^3.7.0",
     "dayjs": "^1.9.5",
     "js-cookie": "^3.0.0-rc.1",
+    "mobile-detect": "^1.4.4",
     "mockjs": "^1.1.0",
     "moment": "^2.29.1",
     "remixicon": "^2.5.0",

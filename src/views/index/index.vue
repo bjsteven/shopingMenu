@@ -81,6 +81,7 @@
   import { getDeviceInfo, CamSwitch, getDevicesetup } from '@/api/deviceinfo'
   import { mapGetters } from 'vuex'
   import lodash from 'lodash'
+  import MobileDetect from 'mobile-detect'
 
   export default {
     name: 'home-page',
@@ -92,6 +93,7 @@
       this.date2 = allDate.getFullYear()
       this.handleGetDeviceInfo()
       this.handleGetDevicesetup()
+      this.handleGetBrowserInfo()
     },
     data() {
       return {
@@ -106,6 +108,11 @@
       }
     },
     methods: {
+      handleGetBrowserInfo() {
+        const md = new MobileDetect(global.navigator.userAgent)
+        console.log(md, '// ssssssssss')
+        // this.$store.commit('setDesktop', md.mobile())
+      },
       handleChange(e) {
         this.currentComponentName = e.target.value
       },
