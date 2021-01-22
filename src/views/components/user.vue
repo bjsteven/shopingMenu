@@ -110,8 +110,8 @@
         v-model="currentTime"
         type="time"
         title="选择时间"
-        :min-hour="10"
-        :max-hour="20"
+        :min-hour="0"
+        :max-hour="24"
         @confirm="onConfirm"
         @cancel="
           () => {
