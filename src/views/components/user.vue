@@ -269,10 +269,9 @@
           return
         }
         this.daynighttimeLoading = true
-
         const res = await daynighttime({
-          Sunrise: this.Sunrise.format('HH:mm'),
-          Sunset: this.Sunset.format('HH:mm'),
+          Sunrise: this.Sunrise,
+          Sunset: this.Sunset,
         })
 
         if (res) {
